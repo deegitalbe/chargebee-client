@@ -6,10 +6,10 @@ return [
     /**
      * Site where we use chargebee api.
      */
-    'site' => 'trustup-test',
+    'site' => env("CHARGEBEE_SITE"),
 
     /**
      * Chargebee secret key.
      */
-    'secret' => "test_3A885ts8PrFLisGQB7ZT19dOcd53ZSdWu",
+    'secret' => env("CHARGEBEE_KEY"),
 ];
