@@ -1,0 +1,37 @@
+{
+    "name": "deegitalbe/chargebee-client",
+    "description": "Chargebee client used by our applications.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mathieu Henrotay",
+            "email": "mathieu.henrotay@gmail.com"
+        }
+    ],
+    "require": {
+        "henrotaym/laravel-api-client": "^1.3",
+        "deegitalbe/trustup-versioned-package": "^1.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Deegitalbe\\ChargebeeClient\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Deegitalbe\\ChargebeeClient\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Deegitalbe\\ChargebeeClient\\Providers\\ChargebeeClientProvider"
+            ]
+        }
+    }
+}
