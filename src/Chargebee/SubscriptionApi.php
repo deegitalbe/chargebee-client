@@ -164,7 +164,6 @@ class SubscriptionApi implements SubscriptionApiContract
     protected function toSubscription(stdClass $raw_response): SubscriptionContract
     {
         return app()->make(SubscriptionContract::class)
-            ->setId($raw_response->subscription->id)
-            ->setStatus($raw_response->subscription->status);
+            ->setAttributes($raw_response);
     }
 }

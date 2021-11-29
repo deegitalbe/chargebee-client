@@ -1,10 +1,12 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\HasAttributesContract;
+
 /**
  * Representing a chargebee customer
  */
-interface CustomerContract
+interface CustomerContract extends HasAttributesContract
 {
     /**
      * Setting customer id.
@@ -72,4 +74,11 @@ interface CustomerContract
      * @return bool
      */
     public function isPersisted(): bool;
+
+    /**
+     * Telling if this customer can be charged.
+     * 
+     * @return bool
+     */
+    public function isChargeable(): bool;
 }

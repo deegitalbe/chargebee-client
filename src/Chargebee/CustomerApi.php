@@ -48,21 +48,18 @@ class CustomerApi implements CustomerApiContract
             return null;
         endif;
 
-        return $this->toCustomer($response->response()->get()->customer);
+        return $this->toCustomer($response->response()->get());
     }
 
     /**
      * Transforming raw customer sent back by api.
      * 
-     * @param stdClass $raw_customer
+     * @param stdClass $raw_response
      * @return CustomerContract
      */
-    protected function toCustomer(stdClass $raw_customer): CustomerContract
+    protected function toCustomer(stdClass $raw_response): CustomerContract
     {
         return app()->make(CustomerContract::class)
-            ->setId($raw_customer->id)
-            ->setFirstName($raw_customer->first_name)
-            ->setLastName($raw_customer->last_name)
-            ->setEmail($raw_customer->email);
+            ->setAttributes($raw_response);
     }
 }

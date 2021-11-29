@@ -1,6 +1,9 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use stdClass;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
 
 /**
@@ -8,21 +11,20 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
  */
 class Subscription implements SubscriptionContract
 {
+    use HasAttributes;
 
     /**
-     * Subscription id
+     * Cosntruction subscription instance.
      * 
-     * @var string
+     * @return void
      */
-    protected $id;
+    public function __construct()
+    {
+        $this->attributes = json_decode(json_encode([
+            'subscription' => new stdClass
+        ]));
+    }
 
-    /**
-     * Subscription status
-     * 
-     * @var string
-     */
-    protected $status;
-    
     /**
      * Setting subscription id.
      * 
@@ -31,7 +33,7 @@ class Subscription implements SubscriptionContract
      */
     public function setId(string $id): SubscriptionContract
     {
-        $this->id = $id;
+        $this->getRawSubscription()->id = $id;
 
         return $this;
     }
@@ -44,7 +46,7 @@ class Subscription implements SubscriptionContract
      */
     public function setStatus(string $status): SubscriptionContract
     {
-        $this->status = $status;
+        $this->getRawSubscription()->status = $status;
 
         return $this;
     }
@@ -56,7 +58,7 @@ class Subscription implements SubscriptionContract
      */
     public function getId(): string
     {
-        return $this->id;
+        return $this->getRawSubscription()->id;
     }
     
     /**
@@ -66,6 +68,26 @@ class Subscription implements SubscriptionContract
      */
     public function getStatus(): string
     {
-        return $this->status;
+        return $this->getRawSubscription()->status;
+    }
+
+    /**
+     * Getting customer linked to this subscription.
+     * 
+     * @return CustomerContract
+     */
+    public function getCustomer(): CustomerContract
+    {
+        return app()->make(CustomerContract::class)->setAttributes($this->attributes);
+    }
+
+    /**
+     * Getting underlying subscription.
+     * 
+     * @return stdClass
+     */
+    protected function getRawSubscription(): stdClass
+    {
+        return $this->attributes->subscription;
     }
 }

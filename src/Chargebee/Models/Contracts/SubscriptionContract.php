@@ -1,10 +1,13 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\HasAttributesContract;
+
 /**
  * Representing a chargebee subscription
  */
-interface SubscriptionContract
+interface SubscriptionContract extends HasAttributesContract
 {
     /**
      * Setting subscription id.
@@ -35,4 +38,11 @@ interface SubscriptionContract
      * @return string
      */
     public function getStatus(): string;
+
+    /**
+     * Getting customer linked to this subscription.
+     * 
+     * @return CustomerContract
+     */
+    public function getCustomer(): CustomerContract;
 }

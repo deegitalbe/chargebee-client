@@ -1,6 +1,7 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Credential\Abstracts;
 
+use Henrotaym\LaravelApiClient\JsonCredential;
 use Deegitalbe\ChargebeeClient\Facades\Package;
 use Henrotaym\LaravelApiClient\Contracts\RequestContract;
 use Henrotaym\LaravelApiClient\Contracts\CredentialContract;
@@ -8,10 +9,11 @@ use Henrotaym\LaravelApiClient\Contracts\CredentialContract;
 /**
  * Chargebee credential setting up request to communicate with chargebee API.
  */
-abstract class ChargebeeCredential implements CredentialContract
+abstract class ChargebeeCredential extends JsonCredential
 {
     public function prepare(RequestContract &$request)
     {
+        parent::prepare($request);
         $request
             ->setBaseUrl($this->getUrl())
             ->setBasicAuth(Package::getSecret());

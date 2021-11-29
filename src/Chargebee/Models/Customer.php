@@ -1,6 +1,8 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use stdClass;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 
 /**
@@ -8,34 +10,20 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
  */
 class Customer implements CustomerContract
 {
-    
+    use HasAttributes;
+
     /**
-     * Customer id.
+     * Cosntruction customer instance.
      * 
-     * @var string
+     * @return void
      */
-    protected $id;
-    
-    /**
-     * Customer first name.
-     * 
-     * @var string
-     */
-    protected $first_name;
-    
-    /**
-     * Customer last name.
-     * 
-     * @var string
-     */
-    protected $last_name;
-    
-    /**
-     * Customer email.
-     * 
-     * @var string
-     */
-    protected $email;
+    public function __construct()
+    {
+        $this->attributes = json_decode(json_encode([
+            'customer' => new stdClass
+        ]));
+    }
+
     /**
      * Setting customer id.
      * 
@@ -44,7 +32,7 @@ class Customer implements CustomerContract
      */
     public function setId(string $id): CustomerContract
     {
-        $this->id = $id;
+        $this->getRawCustomer()->id = $id;
 
         return $this;
     }
@@ -57,7 +45,7 @@ class Customer implements CustomerContract
      */
     public function setFirstName(string $first_name): CustomerContract
     {
-        $this->first_name = $first_name;
+        $this->getRawCustomer()->first_name = $first_name;
 
         return $this;
     }
@@ -70,7 +58,7 @@ class Customer implements CustomerContract
      */
     public function setLastName(string $last_name): CustomerContract
     {
-        $this->last_name = $last_name;
+        $this->getRawCustomer()->last_name = $last_name;
 
         return $this;
     }
@@ -83,7 +71,7 @@ class Customer implements CustomerContract
      */
     public function setEmail(string $email): CustomerContract
     {
-        $this->email = $email;
+        $this->getRawCustomer()->email = $email;
 
         return $this;
     }
@@ -95,7 +83,7 @@ class Customer implements CustomerContract
      */
     public function getId(): ?string
     {
-        return $this->id;
+        return $this->getRawCustomer()->id ?? null;
     }
     
     /**
@@ -105,7 +93,7 @@ class Customer implements CustomerContract
      */
     public function getFirstName(): string
     {
-        return $this->first_name;
+        return $this->getRawCustomer()->first_name;
     }
     
     /**
@@ -115,7 +103,7 @@ class Customer implements CustomerContract
      */
     public function getLastName(): string
     {
-        return $this->last_name;
+        return $this->getRawCustomer()->last_name;
     }
     
     /**
@@ -125,7 +113,17 @@ class Customer implements CustomerContract
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->getRawCustomer()->email;
+    }
+
+    /**
+     * Getting underlying raw customer.
+     * 
+     * @return stdClass
+     */
+    protected function getRawCustomer(): stdClass
+    {
+        return $this->attributes->customer;
     }
 
     /**
@@ -135,6 +133,16 @@ class Customer implements CustomerContract
      */
     public function isPersisted(): bool
     {
-        return !!$this->id;
+        return !!$this->getId();
+    }
+
+    /**
+     * Telling if this customer can be charged.
+     * 
+     * @return bool
+     */
+    public function isChargeable(): bool
+    {
+        return ($this->getRawCustomer()->card_status ?? null) === 'valid';
     }
 }

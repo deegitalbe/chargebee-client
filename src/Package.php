@@ -15,7 +15,12 @@ class Package implements VersionedPackageContract
      * 
      * @var array
      */
-    protected $projects = [];
+    protected $projects = [
+        'taches.trustup.pro',
+        'timetracker.trustup.pro',
+        'facturation.trustup.pro',
+        'agenda.trustup.pro'
+    ];
 
     /**
      * Prefix used for this package.
@@ -56,8 +61,9 @@ class Package implements VersionedPackageContract
                 return $project_url !== config('app.url');
             })
             ->map(function(string $project_url) {
+                $url = $project_url . (config('app.env') !== 'production' ? ".test" : "");
                 return app()->make(ProjectContract::class)
-                    ->setUrl($project_url)
+                    ->setUrl($url)
                     ->setVersionedPackage($this);
             });
     }
