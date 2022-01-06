@@ -86,7 +86,7 @@ class Subscription implements SubscriptionContract
      * 
      * @return stdClass
      */
-    protected function getRawSubscription(): stdClass
+    public function getRawSubscription(): stdClass
     {
         return $this->attributes->subscription;
     }
