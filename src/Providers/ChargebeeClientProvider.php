@@ -9,14 +9,17 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Customer;
 use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionApi;
 use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Subscription;
+use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionPlanApi;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\SubscriptionPlan;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\CustomerApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionApiCredential;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionPlanApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
 use Deegitalbe\TrustupVersionedPackage\Contracts\VersionedPackageCheckerContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionPlanApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 
 /**
@@ -87,6 +90,14 @@ class ChargebeeClientProvider extends ServiceProvider
             return new SubscriptionApi(
                 $app->make(ClientContract::class)
                     ->setCredential(new SubscriptionApiCredential)
+            );
+        });
+
+        // Subscription plan API
+        $this->app->bind(SubscriptionPlanApiContract::class, function($app) {
+            return new SubscriptionPlanApi(
+                $app->make(ClientContract::class)
+                    ->setCredential(new SubscriptionPlanApiCredential)
             );
         });
 

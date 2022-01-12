@@ -1,10 +1,12 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\HasAttributesContract;
+
 /**
  * Representing a subscription plan.
  */
-interface SubscriptionPlanContract
+interface SubscriptionPlanContract extends HasAttributesContract
 {
     /**
      * Setting customer id.
@@ -21,6 +23,22 @@ interface SubscriptionPlanContract
      * @return SubscriptionPlanContract
      */
     public function setTrialDuration(int $trial_duration): SubscriptionPlanContract;
+
+    /**
+     * Setting subscription price in cent.
+     * 
+     * @param int $price
+     * @return SubscriptionPlanContract
+     */
+    public function setPriceInCent(int $price): SubscriptionPlanContract;
+
+    /**
+     * Setting subscription price in euro.
+     * 
+     * @param int $price
+     * @return SubscriptionPlanContract
+     */
+    public function setPriceInEuro(float $price): SubscriptionPlanContract;
     
     /**
      * Getting plan id.
@@ -35,4 +53,18 @@ interface SubscriptionPlanContract
      * @return int
      */
     public function getTrialDuration(): int;
+
+    /**
+     * Getting subscription price in cent.
+     * 
+     * @return int
+     */
+    public function getPriceInCent(): int;
+
+    /**
+     * Getting subscription price in euro.
+     * 
+     * @return float
+     */
+    public function getPriceInEuro(): float;
 }

@@ -1,7 +1,9 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use stdClass;
 use Carbon\Carbon;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 
 /**
@@ -9,18 +11,19 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContra
  */
 class SubscriptionPlan implements SubscriptionPlanContract
 {
-    /**
-     * Subscrption plan id.
-     * @var string
-     */
-    protected $id;
+    use HasAttributes;
 
     /**
-     * Subscrption plan duration in days.
+     * Cosntruction subscription plan instance.
      * 
-     * @var int
+     * @return void
      */
-    protected $trial_duration;
+    public function __construct()
+    {
+        $this->attributes = json_decode(json_encode([
+            'plan' => new stdClass
+        ]));
+    }
     
     /**
      * Setting customer id.
@@ -30,7 +33,7 @@ class SubscriptionPlan implements SubscriptionPlanContract
      */
     public function setId(string $id): SubscriptionPlanContract
     {
-        $this->id = $id;
+        $this->getRawPlan()->id = $id;
 
         return $this;
     }
@@ -43,9 +46,33 @@ class SubscriptionPlan implements SubscriptionPlanContract
      */
     public function setTrialDuration(int $trial_duration): SubscriptionPlanContract
     {
-        $this->trial_duration = $trial_duration;
+        $this->getRawPlan()->trial_period = $trial_duration;
 
         return $this;
+    }
+    
+    /**
+     * Setting subscription_plan price in cent.
+     * 
+     * @param int $price
+     * @return SubscriptionPlanContract
+     */
+    public function setPriceInCent(int $price): SubscriptionPlanContract
+    {
+        $this->getRawPlan()->price = $price;
+        
+        return $this;
+    }
+
+    /**
+     * Setting subscription_plan price in euro.
+     * 
+     * @param int $price
+     * @return SubscriptionPlanContract
+     */
+    public function setPriceInEuro(float $price): SubscriptionPlanContract
+    {
+        return $this->setPriceInCent(bcmul($price, 100));
     }
     
     /**
@@ -55,7 +82,7 @@ class SubscriptionPlan implements SubscriptionPlanContract
      */
     public function getId(): string
     {
-        return $this->id;
+        return $this->getRawPlan()->id;
     }
     
     /**
@@ -65,6 +92,37 @@ class SubscriptionPlan implements SubscriptionPlanContract
      */
     public function getTrialDuration(): int
     {
-        return $this->trial_duration;
+        return $this->getRawPlan()->trial_period;
     }
+
+    /**
+     * Getting subscription plan price in cent.
+     * 
+     * @return int
+     */
+    public function getPriceInCent(): int
+    {
+        return $this->getRawPlan()->price;
+    }
+
+    /**
+     * Getting subscription plan price in euro.
+     * 
+     * @return float
+     */
+    public function getPriceInEuro(): float
+    {
+        return bcdiv($this->getPriceInCent(), 100);
+    }
+
+    /**
+     * Getting underlying plan.
+     * 
+     * @return stdClass
+     */
+    public function getRawPlan(): stdClass
+    {
+        return $this->attributes->plan;
+    }
+
 }

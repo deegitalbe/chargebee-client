@@ -3,6 +3,7 @@ namespace Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts;
 
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\HasAttributesContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 
 /**
  * Representing a chargebee subscription
@@ -45,4 +46,19 @@ interface SubscriptionContract extends HasAttributesContract
      * @return CustomerContract
      */
     public function getCustomer(): CustomerContract;
+
+    /**
+     * Setting plan linked to this subscription.
+     * 
+     * @param SubscriptionPlanContract $plan
+     * @return SubscriptionContract
+     */
+    public function setPlan(SubscriptionPlanContract $plan): SubscriptionContract;
+
+    /**
+     * Getting subscription plan linked to this subscription.
+     * 
+     * @return SubscriptionPlanContract
+     */
+    public function getPlan(): SubscriptionPlanContract;
 }

@@ -4,7 +4,9 @@ namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 use stdClass;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionPlanApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 
 /**
  * Representing a chargebee subscription
@@ -50,6 +52,19 @@ class Subscription implements SubscriptionContract
 
         return $this;
     }
+
+    /**
+     * Setting plan linked to this subscription.
+     * 
+     * @param SubscriptionPlanContract $plan
+     * @return SubscriptionContract
+     */
+    public function setPlan(SubscriptionPlanContract $plan): SubscriptionContract
+    {
+        $this->getRawSubscription()->plan_id = $plan->getId();
+
+        return $this;
+    }
     
     /**
      * Getting subscription id.
@@ -82,6 +97,16 @@ class Subscription implements SubscriptionContract
     }
 
     /**
+     * Getting subscription plan linked to this subscription.
+     * 
+     * @return SubscriptionPlanContract
+     */
+    public function getPlan(): SubscriptionPlanContract
+    {
+        return app()->make(SubscriptionPlanApiContract::class)->find($this->getPlanId());
+    }
+
+    /**
      * Getting underlying subscription.
      * 
      * @return stdClass
@@ -89,5 +114,15 @@ class Subscription implements SubscriptionContract
     public function getRawSubscription(): stdClass
     {
         return $this->attributes->subscription;
+    }
+
+    /**
+     * Getting linked plan id.
+     * 
+     * @return string
+     */
+    protected function getPlanId(): string
+    {
+        return $this->getRawSubscription()->plan_id;
     }
 }
