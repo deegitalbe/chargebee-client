@@ -2,6 +2,7 @@
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
 use stdClass;
+use Carbon\Carbon;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionPlanApiContract;
