@@ -54,6 +54,19 @@ class Subscription implements SubscriptionContract
     }
 
     /**
+     * Setting trial ending date.
+     * 
+     * @param Carbon|null $ending_at
+     * @return  SubscriptionContract
+     */
+    public function setTrialEndingAt(?Carbon $ending_at): SubscriptionContract
+    {
+        $this->getRawSubscription()->trial_end = $ending_at ? $ending_at->timestamp : null;
+
+        return $this;
+    }
+
+    /**
      * Setting plan linked to this subscription.
      * 
      * @param SubscriptionPlanContract $plan
@@ -84,6 +97,18 @@ class Subscription implements SubscriptionContract
     public function getStatus(): string
     {
         return $this->getRawSubscription()->status;
+    }
+
+    /**
+     * Getting trial ending date.
+     * 
+     * @return Carbon|null Null if not applicable.
+     */
+    public function getTrialEndingAt(): ?Carbon
+    {
+        $timestamp = optional($this->getRawSubscription())->trial_end;
+
+        return $timestamp ? new Carbon($timestamp) : null;
     }
 
     /**

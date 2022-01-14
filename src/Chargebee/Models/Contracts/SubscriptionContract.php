@@ -25,6 +25,14 @@ interface SubscriptionContract extends HasAttributesContract
      * @return SubscriptionContract
      */
     public function setStatus(string $status): SubscriptionContract;
+
+    /**
+     * Setting trial ending date.
+     * 
+     * @param Carbon|null $ending_at
+     * @return  SubscriptionContract
+     */
+    public function setTrialEndingAt(?Carbon $ending_at): SubscriptionContract;
     
     /**
      * Getting subscription id.
@@ -39,6 +47,13 @@ interface SubscriptionContract extends HasAttributesContract
      * @return string
      */
     public function getStatus(): string;
+
+    /**
+     * Getting trial ending date.
+     * 
+     * @return Carbon|null Null if not applicable.
+     */
+    public function getTrialEndingAt(): ?Carbon;
 
     /**
      * Getting customer linked to this subscription.
