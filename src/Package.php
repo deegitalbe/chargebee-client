@@ -56,7 +56,7 @@ class Package implements VersionedPackageContract
      */
     public function getProjects(): Collection
     {
-        return $this->projects
+        return collect($this->projects)
             ->filter(function(string $project_url) {
                 return $project_url !== config('app.url');
             })
