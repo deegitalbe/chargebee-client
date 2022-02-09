@@ -143,6 +143,26 @@ class SubscriptionApi implements SubscriptionApiContract
     }
 
     /**
+     * Cancelling subscription now.
+     * 
+     * @param SubscriptionContract $subscription
+     * @return SubscriptionContract|null Null if error.
+     */
+    public function cancelNow(SubscriptionContract $subscription): ?SubscriptionContract
+    {
+        $request = $this->getCancelRequest($subscription);
+
+        $response = $this->client->try($request, "Could not cancel subscription immediately.");
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $this->toSubscription($response->response()->get());
+    }
+
+    /**
      * Making cancel request.
      * 
      * @param SubscriptionContract $subscription

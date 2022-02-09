@@ -34,4 +34,12 @@ interface SubscriptionApiContract
      * @return SubscriptionContract|null Null if error.
      */
     public function cancelAtTerms(SubscriptionContract $subscription): ?SubscriptionContract;
+
+    /**
+     * Cancelling subscription now.
+     * 
+     * @param SubscriptionContract $subscription
+     * @return SubscriptionContract|null Null if error.
+     */
+    public function cancelNow(SubscriptionContract $subscription): ?SubscriptionContract;
 }
