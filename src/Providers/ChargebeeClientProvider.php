@@ -1,13 +1,11 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Deegitalbe\ChargebeeClient\Facades\Package;
 use Deegitalbe\ChargebeeClient\Chargebee\CustomerApi;
 use Henrotaym\LaravelApiClient\Contracts\ClientContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Customer;
 use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionApi;
-use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Subscription;
 use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionPlanApi;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\SubscriptionPlan;
@@ -21,48 +19,27 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
 use Deegitalbe\TrustupVersionedPackage\Contracts\VersionedPackageCheckerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionPlanApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
+use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
+use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageServiceProvider;
 
 /**
  * Chargebee client package service provider.
  */
-class ChargebeeClientProvider extends ServiceProvider
+class ChargebeeClientProvider extends VersionablePackageServiceProvider
 {
-    /**
-     * Provider register method
-     * 
-     * @return void
-     */
-    public function register()
+    public static function getPackageClass(): string
     {
-        $this->registerPackageFacade()
-            ->registerConfig()
-            ->registerChargebeeDetails();
+        return UnderlyingPackage::class;
     }
 
-    /**
-     * Registering package facade.
-     * 
-     * @return self
-     */
-    protected function registerPackageFacade(): self
+    protected function addToRegister(): void
     {
-        $this->app->bind(UnderlyingPackage::$prefix, function($app) {
-            return $app->make(UnderlyingPackage::class);
-        });
-
-        return $this;
+        $this->registerChargebeeDetails();
     }
 
-    /**
-     * Registering package configuration.
-     * 
-     * @return self
-     */
-    protected function registerConfig(): self
+    protected function addToBoot(): void
     {
-        $this->mergeConfigFrom($this->getConfigPath(), Package::getPrefix());
-
-        return $this;
+        $this->registerPackageAsVersioned();
     }
 
     /**
@@ -103,33 +80,6 @@ class ChargebeeClientProvider extends ServiceProvider
 
         return $this;
     }
-    
-    /**
-     * Booting provider.
-     * 
-     * @return void
-     */
-    public function boot()
-    {
-        $this->makeConfigPublishable()
-            ->registerPackageAsVersioned();
-    }
-
-    /**
-     * Making config publishable.
-     * 
-     * @return self
-     */
-    protected function makeConfigPublishable(): self
-    {
-        if ($this->app->runningInConsole()):
-            $this->publishes([
-              $this->getConfigPath() => config_path(Package::getPrefix().'.php'),
-            ], 'config');
-        endif;
-
-        return $this;
-    }
 
     /**
      * Registering package to versioned package checker.
@@ -142,15 +92,5 @@ class ChargebeeClientProvider extends ServiceProvider
             ->addPackage(Package::getFacadeRoot());
         
         return $this;
-    }
-
-    /**
-     * Getting path to config.
-     * 
-     * @return string
-     */
-    protected function getConfigPath(): string
-    {
-        return __DIR__.'/../config/config.php';
     }
 }

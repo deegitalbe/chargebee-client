@@ -4,11 +4,12 @@ namespace Deegitalbe\ChargebeeClient;
 use Illuminate\Support\Collection;
 use Deegitalbe\TrustupVersionedPackage\Contracts\Project\ProjectContract;
 use Deegitalbe\TrustupVersionedPackage\Contracts\VersionedPackageContract;
+use Henrotaym\LaravelPackageVersioning\Services\Versioning\VersionablePackage;
 
 /**
  * Chargebee client underlying package facade.
  */
-class Package implements VersionedPackageContract
+class Package extends VersionablePackage implements VersionedPackageContract
 {
     /**
      * Project urls where this package is installed.
@@ -22,12 +23,10 @@ class Package implements VersionedPackageContract
         'agenda.trustup.pro'
     ];
 
-    /**
-     * Prefix used for this package.
-     * 
-     * @var string
-     */
-    public static $prefix = "chargebee_client";
+    public static function prefix(): string
+    {
+        return "chargebee_client";
+    }
 
     /**
      * Getting chargebee API url.
@@ -69,31 +68,13 @@ class Package implements VersionedPackageContract
     }
 
     /**
-     * Getting package version.
-     */
-    public function getVersion(): string
-    {
-        return "1.2.2";
-    }
-
-    /**
      *  Getting package name
      * 
      * @return string
      */
     public function getName(): string
     {
-        return str_replace('_', '-', self::$prefix);
-    }
-
-    /**
-     *  Getting package prefix.
-     * 
-     * @return string
-     */
-    public function getPrefix(): string
-    {
-        return self::$prefix;
+        return str_replace('_', '-', $this->getPrefix());
     }
     
     /**
@@ -104,6 +85,6 @@ class Package implements VersionedPackageContract
      */
     public function config(string $key = '')
     {
-        return config($this->getPrefix() . ($key ? ".$key" : ""));
+        return $this->getConfig($key);
     }
 }

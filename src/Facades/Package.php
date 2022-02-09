@@ -1,16 +1,16 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Facades;
 
-use Illuminate\Support\Facades\Facade;
-use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
+use Deegitalbe\ChargebeeClient\Package as Underlying;
+use Henrotaym\LaravelPackageVersioning\Facades\Abstracts\VersionablePackageFacade;
 
 /**
  * Chargebee client package facade.
  */
-class Package extends Facade
+class Package extends VersionablePackageFacade
 {
-    public static function getFacadeAccessor()
+    public static function getPackageClass(): string
     {
-        return UnderlyingPackage::$prefix;
+        return Underlying::class;
     }
 }
