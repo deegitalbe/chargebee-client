@@ -52,6 +52,33 @@ class CustomerApi implements CustomerApiContract
     }
 
     /**
+     * Creating given customer.
+     * 
+     * @param CustomerContract $customer
+     * @return CustomerContract|null Null if error.
+     */
+    public function store(CustomerContract $customer): ?CustomerContract
+    {
+        $request = app()->make(RequestContract::class)
+            ->setUrl("/")
+            ->setVerb('POST')
+            ->addQuery([
+                'first_name' => $customer->getFirstName(),
+                'last_name' => $customer->getLastName(),
+                'email' => $customer->getEmail(),
+            ]);
+
+        $response = $this->client->try($request, "Could not create customer.");
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $this->toCustomer($response->response()->get());
+    }
+
+    /**
      * Transforming raw customer sent back by api.
      * 
      * @param stdClass $raw_response

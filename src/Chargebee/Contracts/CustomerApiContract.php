@@ -15,4 +15,12 @@ interface CustomerApiContract
      * @return CustomerContract|null Null if not found.
      */
     public function find(string $customer_id): ?CustomerContract;
+
+    /**
+     * Creating given customer.
+     * 
+     * @param CustomerContract $customer
+     * @return CustomerContract|null Null if error.
+     */
+    public function store(CustomerContract $customer): ?CustomerContract;
 }
