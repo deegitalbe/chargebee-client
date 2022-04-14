@@ -1,0 +1,75 @@
+<?php
+namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
+
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
+use stdClass;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\InvoiceContract;
+
+/**
+ * Representing an invoice
+ */
+class Invoice implements InvoiceContract
+{
+    use HasAttributes;
+
+    /**
+     * Getting late statuses.
+     * 
+     * @return array
+     */
+    public static function lateStatuses(): array
+    {
+        return [
+            'not_paid',
+            'payment_due'
+        ];
+    }
+
+    /**
+     * Cosntruction invoice instance.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->attributes = json_decode(json_encode([
+            'invoice' => new stdClass
+        ]));
+    }
+
+    /**
+     * Getting related customer id.
+     * 
+     * @param string
+     * @return string
+     */
+    public function getCustomerId(): string
+    {
+        return $this->getRawInvoice()->customer_id;
+    }
+
+    /**
+     * Getting related customer
+     * 
+     * @return CustomerContract|null
+     */
+    public function getCustomer(): ?CustomerContract
+    {
+        /** @var CustomerApiContract */
+        $customerApi = app()->make(CustomerApiContract::class);
+
+        return $customerApi->find($this->getCustomerId());
+    }
+
+    /**
+     * Getting underlying raw invoice.
+     * 
+     * @return stdClass
+     */
+    protected function getRawInvoice(): stdClass
+    {
+        return $this->attributes->invoice;
+    }
+}
