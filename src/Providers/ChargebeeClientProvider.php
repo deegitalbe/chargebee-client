@@ -11,6 +11,7 @@ use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionPlanApi;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\SubscriptionPlan;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerInvoiceApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\CustomerInvoices\CustomerInvoiceRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\CustomerApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
@@ -24,6 +25,7 @@ use Deegitalbe\ChargebeeClient\Chargebee\CustomerInvoiceApi;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\InvoiceContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Invoice;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\CustomerInvoices\CustomerInvoiceRequest;
 use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
 use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageServiceProvider;
 
@@ -59,6 +61,9 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         $this->app->bind(SubscriptionContract::class, Subscription::class);
         $this->app->bind(SubscriptionPlanContract::class, SubscriptionPlan::class);
         $this->app->bind(InvoiceContract::class, Invoice::class);
+
+        // Requests
+        $this->app->bind(CustomerInvoiceRequestContract::class, CustomerInvoiceRequest::class);
 
         // Customer API
         $this->app->bind(CustomerApiContract::class, function($app) {

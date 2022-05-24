@@ -4,6 +4,7 @@ namespace Deegitalbe\ChargebeeClient\Chargebee;
 use stdClass;
 use Henrotaym\LaravelApiClient\Contracts\ClientContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerInvoiceApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\CustomerInvoices\CustomerInvoiceRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\InvoiceContract;
 use Henrotaym\LaravelApiClient\Contracts\RequestContract;
 use Illuminate\Support\Collection;
@@ -53,7 +54,13 @@ class CustomerInvoiceApi implements CustomerInvoiceApiContract
         $invoices = collect();
 
         do {
-            $offset = $this->handleLateRequest($this->lateRequest($customer_id, $offset), $invoices);
+            $offset = $this->handleLateRequest(
+                $this->lateRequest()
+                    ->customer($customer_id)
+                    ->offset($offset)
+                    ->get(),
+                $invoices
+            );
         } while ($offset);
 
         return is_null($offset) ? null
@@ -65,21 +72,76 @@ class CustomerInvoiceApi implements CustomerInvoiceApiContract
      * 
      * @param string $customer_id
      * @param string|null $offset Offset to get next invoices.
-     * @return RequestContract
+     * @return CustomerInvoiceRequestContract
      */
-    protected function lateRequest(string $customer_id, ?string $offset = null): RequestContract
+    protected function lateRequest(): CustomerInvoiceRequestContract
     {
-        /** @var RequestContract */
-        $request = app()->make(RequestContract::class);
+        /** @var CustomerInvoiceRequestContract */
+        $request = app()->make(CustomerInvoiceRequestContract::class);
 
-        return $request->setUrl('/')
-            ->setVerb('GET')
-            ->addQuery(array_filter([
-                'customer_id[is]' => $customer_id,
-                'status[in]' => "[" . join(',', app()->make(InvoiceContract::class)::lateStatuses()) . "]",
-                'offset' => $offset,
-                'limit' => 100
-            ]));
+        return $request->beingLate()
+            ->latest()
+            ->limit(100);
+    }
+
+    /**
+     * Getting last invoice related to customer id.
+     * 
+     * @return InvoiceContract|null
+     */
+    public function last(string $customer_id): ?InvoiceContract
+    {
+        $response = $this->client->try(
+            $this->lastRequest()->customer($customer_id)->get(), 
+            "Could not retrieve last invoice for customer."
+        );
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        $invoices = $response->response()->get()->list;
+
+        if (count($invoices) === 0):
+            return null;
+        endif;
+
+        return $this->toInvoice($invoices[0]);
+    }
+
+    /**
+     * Getting last late invoice related to customer id.
+     * 
+     * @return InvoiceContract|null
+     */
+    public function lastLate(string $customer_id): ?InvoiceContract
+    {
+        $response = $this->client->try(
+            $this->lastRequest()->customer($customer_id)->beingLate()->get(),
+            "Could not retrieve last late invoice for customer."
+        );
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        $invoices = $response->response()->get()->list;
+
+        if (count($invoices) === 0):
+            return null;
+        endif;
+
+        return $this->toInvoice($invoices[0]);
+    }
+
+    protected function lastRequest(): CustomerInvoiceRequestContract
+    {
+        /** @var CustomerInvoiceRequestContract */
+        $request = app()->make(CustomerInvoiceRequestContract::class);
+
+        return $request->latest()->limit(1);
     }
 
     /**
