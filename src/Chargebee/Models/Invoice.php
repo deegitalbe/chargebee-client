@@ -1,6 +1,7 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use Carbon\Carbon;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use stdClass;
@@ -48,6 +49,16 @@ class Invoice implements InvoiceContract
     public function getCustomerId(): string
     {
         return $this->getRawInvoice()->customer_id;
+    }
+
+    /**
+     * Getting related customer id.
+     * 
+     * @return string
+     */
+    public function getDueDate(): Carbon
+    {
+        return new Carbon($this->getRawInvoice()->due_date);
     }
 
     /**
