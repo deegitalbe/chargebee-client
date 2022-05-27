@@ -1,11 +1,11 @@
 <?php
-namespace Deegitalbe\ChargebeeClient\Chargebee\Requests\CustomerInvoices;
+namespace Deegitalbe\ChargebeeClient\Chargebee\Requests\invoices;
 
-use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\CustomerInvoices\CustomerInvoiceRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\InvoiceContract;
 use Henrotaym\LaravelApiClient\Contracts\RequestContract;
 
-class CustomerInvoiceRequest implements CustomerInvoiceRequestContract
+class InvoiceListRequest implements InvoiceListRequestContract
 {
     /**
      * Related customer
@@ -20,9 +20,22 @@ class CustomerInvoiceRequest implements CustomerInvoiceRequestContract
      * @param string $customer_id
      * @return static
      */
-    public function customer(string $customer_id): CustomerInvoiceRequestContract
+    public function customer(string $customer_id): InvoiceListRequestContract
     {
         $this->get()->addQuery(['customer_id[is]' => $customer_id]);
+
+        return $this;
+    }
+
+    /**
+     * Setting related subscription.
+     * 
+     * @param string $customer_id
+     * @return static
+     */
+    public function subscription(string $subscription_id): InvoiceListRequestContract
+    {
+        $this->get()->addQuery(['subscription_id[is]' => $subscription_id]);
 
         return $this;
     }
@@ -32,7 +45,7 @@ class CustomerInvoiceRequest implements CustomerInvoiceRequestContract
      * 
      * @return static
      */
-    public function beingLate(): CustomerInvoiceRequestContract
+    public function beingLate(): InvoiceListRequestContract
     {
         $this->get()->addQuery([
             'status[in]' => "[" . join(',', app()->make(InvoiceContract::class)::lateStatuses()) . "]" 
@@ -46,9 +59,21 @@ class CustomerInvoiceRequest implements CustomerInvoiceRequestContract
      * 
      * @return static
      */
-    public function latest(): CustomerInvoiceRequestContract
+    public function latest(): InvoiceListRequestContract
     {
         $this->get()->addQuery(['sort_by[desc]' => 'date']);
+
+        return $this;
+    }
+
+    /**
+     * Ordering invoices by oldest.
+     * 
+     * @return static
+     */
+    public function oldest(): InvoiceListRequestContract
+    {
+        $this->get()->addQuery(['sort_by[asc]' => 'date']);
 
         return $this;
     }
@@ -59,7 +84,7 @@ class CustomerInvoiceRequest implements CustomerInvoiceRequestContract
      * @param int|null $limit
      * @return static
      */
-    public function limit(?int $limit): CustomerInvoiceRequestContract
+    public function limit(?int $limit): InvoiceListRequestContract
     {
         $this->get()->addQuery(['limit' => $limit]);
 
@@ -70,8 +95,9 @@ class CustomerInvoiceRequest implements CustomerInvoiceRequestContract
      * Setting request offset.
      * 
      * @param string|null $offset
+     * @return static
      */
-    public function offset(?string $offset): CustomerInvoiceRequestContract
+    public function offset(?string $offset): InvoiceListRequestContract
     {
         $this->get()->addQuery(['offset' => $offset]);
 

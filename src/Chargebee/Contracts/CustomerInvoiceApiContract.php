@@ -26,16 +26,10 @@ interface CustomerInvoiceApiContract
     public function late(string $customer_id): ?Collection;
 
     /**
-     * Getting last invoice related to customer id.
-     * 
-     * @return InvoiceContract|null
-     */
-    public function last(string $customer_id): ?InvoiceContract;
-
-    /**
      * Getting last late invoice related to customer id.
      * 
+     * @param string|null $customer_id
      * @return InvoiceContract|null
      */
-    public function lastLate(string $customer_id): ?InvoiceContract; 
+    public function firstLate(string $customer_id): ?InvoiceContract; 
 }
