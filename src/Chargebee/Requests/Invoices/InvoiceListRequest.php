@@ -35,7 +35,7 @@ class InvoiceListRequest implements InvoiceListRequestContract
      */
     public function subscription(string $subscription_id): InvoiceListRequestContract
     {
-        $this->get()->addQuery(['subscription_id[is]' => $subscription_id]);
+        $this->get()->addQuery(['subscription_id' => $subscription_id]);
 
         return $this;
     }
