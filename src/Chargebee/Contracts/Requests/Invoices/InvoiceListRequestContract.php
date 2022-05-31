@@ -1,9 +1,9 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices;
 
-use Henrotaym\LaravelApiClient\Contracts\RequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\ApiRequestContract;
 
-interface InvoiceListRequestContract
+interface InvoiceListRequestContract extends ApiRequestContract
 {
     /**
      * Setting related customer.
@@ -56,11 +56,4 @@ interface InvoiceListRequestContract
      * @param string|null $offset
      */
     public function offset(?string $offset): InvoiceListRequestContract;
-    
-    /**
-     * Getting request to execute.
-     * 
-     * @return RequestContract
-     */
-    public function get(): RequestContract;
 }

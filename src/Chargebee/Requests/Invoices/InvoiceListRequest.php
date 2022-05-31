@@ -3,9 +3,10 @@ namespace Deegitalbe\ChargebeeClient\Chargebee\Requests\Invoices;
 
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\InvoiceContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\AbstractApiRequest;
 use Henrotaym\LaravelApiClient\Contracts\RequestContract;
 
-class InvoiceListRequest implements InvoiceListRequestContract
+class InvoiceListRequest extends AbstractApiRequest implements InvoiceListRequestContract
 {
     /**
      * Related customer
@@ -102,16 +103,6 @@ class InvoiceListRequest implements InvoiceListRequestContract
         $this->get()->addQuery(['offset' => $offset]);
 
         return $this;
-    }
-    
-    /**
-     * Getting request to execute.
-     * 
-     * @return RequestContract
-     */
-    public function get(): RequestContract
-    {
-        return $this->request ?? $this->request = $this->buildRequest();
     }
 
     /**

@@ -2,6 +2,7 @@
 namespace Deegitalbe\ChargebeeClient\Chargebee\Contracts;
 
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoicePayNowRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\InvoiceContract;
 use Illuminate\Support\Collection;
 
