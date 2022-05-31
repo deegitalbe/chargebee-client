@@ -36,7 +36,7 @@ class InvoiceListRequest extends AbstractApiRequest implements InvoiceListReques
      */
     public function subscription(string $subscription_id): InvoiceListRequestContract
     {
-        $this->get()->addQuery(['subscription_id' => $subscription_id]);
+        $this->get()->addQuery(['subscription_id[is]' => $subscription_id]);
 
         return $this;
     }
