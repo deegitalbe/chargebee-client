@@ -176,6 +176,30 @@ class SubscriptionApi implements SubscriptionApiContract
     }
 
     /**
+     * Reactivate subscription.
+     * 
+     * @param SubscriptionContract $subscription
+     * @return SubscriptionContract|null Null if error.
+     */
+    public function reactivate(SubscriptionContract $subscription): ?SubscriptionContract
+    {
+        /** @var RequestContract */
+        $request = app()->make(RequestContract::class);
+        $request
+            ->setVerb("POST")
+            ->setUrl("subscriptions/{$subscription->getId()}/reactivate");
+
+        $response = $this->client->try($request, "Could not reactivate chargebee subscription [{$subscription->getId()}]");
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $this->toSubscription($response->response()->get());
+    }
+
+    /**
      * Transforming raw subscription sent back by api.
      * 
      * @param stdClass $raw_response

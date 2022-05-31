@@ -42,4 +42,12 @@ interface SubscriptionApiContract
      * @return SubscriptionContract|null Null if error.
      */
     public function cancelNow(SubscriptionContract $subscription): ?SubscriptionContract;
+
+    /**
+     * Reactivate subscription.
+     * 
+     * @param SubscriptionContract $subscription
+     * @return SubscriptionContract|null Null if error.
+     */
+    public function reactivate(SubscriptionContract $subscription): ?SubscriptionContract;
 }
