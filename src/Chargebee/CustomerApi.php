@@ -79,6 +79,34 @@ class CustomerApi implements CustomerApiContract
     }
 
     /**
+     * Merging two customers with one another.
+     * 
+     * @param CustomerContract $from
+     * @param CustomerContract $to
+     * @return CustomerContract|null
+     */
+    public function merge(CustomerContract $from, CustomerContract $to): ?CustomerContract
+    {
+        /** @var RequestContract */
+        $request = app()->make(RequestContract::class);
+        $request->setVerb("POST")
+            ->setUrl("merge")
+            ->addQuery([
+                "from_customer_id" => $from->getId(),
+                "to_customer_id" => $to->getId()
+            ]);
+        
+        $response = $this->client->try($request, "Could not merge customers.");
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $this->toCustomer($response->response()->get());
+    }
+
+    /**
      * Transforming raw customer sent back by api.
      * 
      * @param stdClass $raw_response

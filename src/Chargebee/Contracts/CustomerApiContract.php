@@ -23,4 +23,13 @@ interface CustomerApiContract
      * @return CustomerContract|null Null if error.
      */
     public function store(CustomerContract $customer): ?CustomerContract;
+
+    /**
+     * Merging two customers with one another.
+     * 
+     * @param CustomerContract $from
+     * @param CustomerContract $to
+     * @return CustomerContract|null
+     */
+    public function merge(CustomerContract $from, CustomerContract $to): ?CustomerContract;
 }
