@@ -1,6 +1,8 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
 use stdClass;
 use Henrotaym\LaravelApiClient\Contracts\ClientContract;
 use Henrotaym\LaravelApiClient\Contracts\RequestContract;
@@ -193,6 +195,42 @@ class SubscriptionApi implements SubscriptionApiContract
 
         if ($response->failed()):
             report($response->error());
+            return null;
+        endif;
+
+        return $this->toSubscription($response->response()->get());
+    }
+
+    /**
+     * Pausing subscription.
+     * 
+     * @param PauseRequestContract $request
+     * @return SubscriptionContract|null
+     */
+    public function pause(PauseRequestContract $request): ?SubscriptionContract
+    {
+        $response = $this->client->try($request->get(), "Could not pause subscription.");
+
+        if ($response->failed()):
+            dd($response->error()->context());
+            return null;
+        endif;
+
+        return $this->toSubscription($response->response()->get());
+    }
+
+    /**
+     * Pausing subscription.
+     * 
+     * @param ResumeRequestContract $request
+     * @return SubscriptionContract|null
+     */
+    public function resume(ResumeRequestContract $request): ?SubscriptionContract
+    {
+        $response = $this->client->try($request->get(), "Could not resume subscription.");
+
+        if ($response->failed()):
+            dd($response->error()->context());
             return null;
         endif;
 

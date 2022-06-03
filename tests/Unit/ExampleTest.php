@@ -8,6 +8,8 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerInvoiceApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\PageApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionInvoiceApiContract;
 
 class ExampleTest extends TestCase
@@ -36,6 +38,26 @@ class ExampleTest extends TestCase
         // /** @var PageApiContract */
         // $api = $this->app->make(PageApiContract::class);
         // dd($api->payNow($request));
+
+        // /** @var PauseRequestContract */
+        // $request = $this->app->make(PauseRequestContract::class);
+        // $request->setSubscription("AzqTzMSrkcwtVaU8")
+        //     ->immediately()
+        //     ->keepUnbilledCharges();
+
+        // /** @var SubscriptionApiContract */
+        // $api = $this->app->make(SubscriptionApiContract::class);
+        // dd($api->pause($request));
+
+        // /** @var ResumeRequestContract */
+        // $request = $this->app->make(ResumeRequestContract::class);
+        // $request->setSubscription("AzqTzMSrkcwtVaU8")
+        //     ->immediately()
+        //     ->keepUnpaidInvoices();
+
+        // /** @var SubscriptionApiContract */
+        // $api = $this->app->make(SubscriptionApiContract::class);
+        // dd($api->resume($request));
         
         $this->assertTrue(true);
     }

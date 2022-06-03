@@ -108,13 +108,11 @@ class InvoiceListRequest extends AbstractApiRequest implements InvoiceListReques
     /**
      * Building a fresh request.
      * 
+     * @param RequestContract $request
      * @return RequestContract
      */
-    protected function buildRequest(): RequestContract
+    protected function build(RequestContract $request): RequestContract
     {
-        /** @var RequestContract */
-        $request = app()->make(RequestContract::class);
-
         return $request->setUrl('/')
             ->setVerb('GET');
     }

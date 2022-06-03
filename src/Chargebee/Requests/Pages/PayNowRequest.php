@@ -36,13 +36,11 @@ class PayNowRequest extends AbstractApiRequest implements PayNowRequestContract
     /**
      * Building a fresh request.
      * 
+     * @param RequestContract $request
      * @return RequestContract
      */
-    protected function buildRequest(): RequestContract
+    protected function build(RequestContract $request): RequestContract
     {
-        /** @var RequestContract */
-        $request = app()->make(RequestContract::class);
-
         return $request->setUrl('collect_now')
             ->setVerb('POST');
     }

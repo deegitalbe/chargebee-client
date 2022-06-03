@@ -15,6 +15,8 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\InvoiceApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\PageApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\CustomerApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionInvoiceApiContract;
@@ -35,6 +37,8 @@ use Deegitalbe\ChargebeeClient\Chargebee\PageApi;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\CustomerInvoices\CustomerInvoiceRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\invoices\InvoiceListRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Pages\PayNowRequest;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\PauseRequest;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\ResumeRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionInvoiceApi;
 use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
 use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageServiceProvider;
@@ -75,6 +79,8 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         // Requests
         $this->app->bind(InvoiceListRequestContract::class, InvoiceListRequest::class);
         $this->app->bind(PayNowRequestContract::class, PayNowRequest::class);
+        $this->app->bind(PauseRequestContract::class, PauseRequest::class);
+        $this->app->bind(ResumeRequestContract::class, ResumeRequest::class);
 
         // Customer API
         $this->app->bind(CustomerApiContract::class, function($app) {
