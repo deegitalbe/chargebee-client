@@ -1,6 +1,7 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Providers;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Client;
 use Deegitalbe\ChargebeeClient\Facades\Package;
 use Deegitalbe\ChargebeeClient\Chargebee\PageApi;
 use Deegitalbe\ChargebeeClient\Chargebee\InvoiceApi;
@@ -85,48 +86,42 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         // Customer API
         $this->app->bind(CustomerApiContract::class, function($app) {
             return new CustomerApi(
-                $app->make(ClientContract::class)
-                ->setCredential(new CustomerApiCredential)
+                new Client(new CustomerApiCredential)
             );
         });
 
         // Page API
         $this->app->bind(PageApiContract::class, function($app) {
             return new PageApi(
-                $app->make(ClientContract::class)
-                    ->setCredential(new PageApiCredential)
+                new Client(new PageApiCredential)
             );
         });
         
         // Subscription API
         $this->app->bind(SubscriptionApiContract::class, function($app) {
             return new SubscriptionApi(
-                $app->make(ClientContract::class)
-                    ->setCredential(new SubscriptionApiCredential)
+                new Client(new SubscriptionApiCredential)
             );
         });
 
         // Subscription plan API
         $this->app->bind(SubscriptionPlanApiContract::class, function($app) {
             return new SubscriptionPlanApi(
-                $app->make(ClientContract::class)
-                    ->setCredential(new SubscriptionPlanApiCredential)
+                new Client(new SubscriptionPlanApiCredential)
             );
         });
 
         // Invoices API
         $this->app->bind(InvoiceApiContract::class, function($app) {
             return new InvoiceApi(
-                $app->make(ClientContract::class)
-                    ->setCredential(new InvoiceApiCredential)
+                new Client(new InvoiceApiCredential)
             );
         });
 
         // Customer invoices API
         $this->app->bind(CustomerInvoiceApiContract::class, function($app) {
             return new CustomerInvoiceApi(
-                $app->make(ClientContract::class)
-                    ->setCredential(new InvoiceApiCredential),
+                new Client(new InvoiceApiCredential),
                 $app->make(InvoiceApiContract::class)
             );
         });
@@ -134,8 +129,7 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         // Subscription invoices API
         $this->app->bind(SubscriptionInvoiceApiContract::class, function($app) {
             return new SubscriptionInvoiceApi(
-                $app->make(ClientContract::class)
-                    ->setCredential(new InvoiceApiCredential),
+                new Client(new InvoiceApiCredential),
                 $app->make(InvoiceApiContract::class)
             );
         });

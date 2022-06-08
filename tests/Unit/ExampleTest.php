@@ -1,16 +1,18 @@
 <?php
 namespace Deegitalbe\TrustupProAppCommon\Tests\Unit;
 
-use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
 use Deegitalbe\ChargebeeClient\Tests\TestCase;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\PageApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\InvoiceApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
 use Henrotaym\LaravelPackageVersioning\Testing\Traits\InstallPackageTest;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerInvoiceApiContract;
-use Deegitalbe\ChargebeeClient\Chargebee\Contracts\PageApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionPlanApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionInvoiceApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
-use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionInvoiceApiContract;
 
 class ExampleTest extends TestCase
 {
@@ -58,6 +60,14 @@ class ExampleTest extends TestCase
         // /** @var SubscriptionApiContract */
         // $api = $this->app->make(SubscriptionApiContract::class);
         // dd($api->resume($request));
+
+        dd(app(CustomerApiContract::class),
+        app(PageApiContract::class),
+        app(SubscriptionApiContract::class),
+        app(SubscriptionPlanApiContract::class),
+        app(InvoiceApiContract::class),
+        app(CustomerInvoiceApiContract::class),
+        app(SubscriptionInvoiceApiContract::class));
         
         $this->assertTrue(true);
     }
