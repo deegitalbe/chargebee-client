@@ -29,7 +29,7 @@ interface ApiStatusContract
      * @param mixed ...$args Arguments to given to callback.
      * @return mixed|null Null if failure and client being healthy.
      */
-    public function whenHealty(callable $callback, ...$args);
+    public function whenHealthy(callable $callback, ...$args);
 
     /**
      * Making sure to refetch status from api before any further check.

@@ -119,7 +119,7 @@ class ApiStatus implements ApiStatusContract
      * @param mixed ...$args Arguments to given to callback.
      * @return mixed|null Null if failure unrelated to chargebee api status.
      */
-    public function whenHealty(callable $callback, ...$args)
+    public function whenHealthy(callable $callback, ...$args)
     {
         $response = $callback(...$args);
 
@@ -129,7 +129,7 @@ class ApiStatus implements ApiStatusContract
 
         sleep($this->waitUntil());
 
-        return $this->whenHealty($callback, ...$args);
+        return $this->whenHealthy($callback, ...$args);
     }
 
     /**
