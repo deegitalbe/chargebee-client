@@ -111,6 +111,28 @@ class ApiStatus implements ApiStatusContract
     }
 
     /**
+     * Trying to execute callback and retry it if client is not healthy.
+     * 
+     * If failing due to unhealty client, retry when healthy.
+     * 
+     * @param callable $callback Should return null in case of failure.
+     * @param mixed ...$args Arguments to given to callback.
+     * @return mixed|null Null if failure unrelated to chargebee api status.
+     */
+    public function whenHealty(callable $callback, ...$args)
+    {
+        $response = $callback(...$args);
+
+        if (!is_null($response) || $this->fresh()->isHealthy()):
+            return $response;
+        endif;
+
+        sleep($this->waitUntil());
+
+        return $this->whenHealty($callback, ...$args);
+    }
+
+    /**
      * Making sure instance is clean before making any new check.
      * 
      * @return static

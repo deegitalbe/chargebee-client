@@ -21,6 +21,17 @@ interface ApiStatusContract
     public function waitUntil(): ?int;
 
     /**
+     * Trying to execute callback.
+     * 
+     * If failing due to unhealty client, retry when healthy.
+     * 
+     * @param callable $callback Should return null in case of failure.
+     * @param mixed ...$args Arguments to given to callback.
+     * @return mixed|null Null if failure and client being healthy.
+     */
+    public function whenHealty(callable $callback, ...$args);
+
+    /**
      * Making sure to refetch status from api before any further check.
      * 
      * @return static
