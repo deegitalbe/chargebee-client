@@ -49,6 +49,16 @@ class Package extends VersionablePackage implements VersionedPackageContract
     }
 
     /**
+     * Getting api limit reset duration.
+     * 
+     * @return int
+     */
+    public function getLimitResetDuration(): int
+    {
+        return $this->config('limits.reset');
+    }
+
+    /**
      * Getting projects using this package.
      * 
      * @return Collection

@@ -42,6 +42,9 @@ use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageSer
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Utils\ApiStatusContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Credential\Utils\ApiStatusCredential;
+use Deegitalbe\ChargebeeClient\Chargebee\Utils\ApiStatus;
 
 /**
  * Chargebee client package service provider.
@@ -137,6 +140,16 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
                 $app->make(ClientContract::class)
                     ->setCredential(new InvoiceApiCredential),
                 $app->make(InvoiceApiContract::class)
+            );
+        });
+
+        // Utils
+        
+        // API status
+        $this->app->bind(ApiStatusContract::class, function($app) {
+            return new ApiStatus(
+                $app->make(ClientContract::class)
+                    ->setCredential(new ApiStatusCredential),
             );
         });
 
