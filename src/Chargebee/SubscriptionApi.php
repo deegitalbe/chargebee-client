@@ -48,6 +48,7 @@ class SubscriptionApi implements SubscriptionApiContract
         $response = $this->client->try($request, "Could not find subscription.");
 
         if ($response->failed()):
+            report($response->error());
             return null;
         endif;
 
