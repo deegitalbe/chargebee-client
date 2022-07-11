@@ -113,6 +113,18 @@ class Subscription implements SubscriptionContract
     }
 
     /**
+     * Getting ending date.
+     * 
+     * @return Carbon|null Null if not applicable.
+     */
+    public function getEndingAt(): ?Carbon
+    {
+        $timestamp = optional($this->getRawSubscription())->trial_end;
+
+        return $timestamp ? new Carbon($timestamp) : null;
+    }
+
+    /**
      * Getting customer linked to this subscription.
      * 
      * @return CustomerContract

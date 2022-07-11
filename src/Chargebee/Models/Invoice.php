@@ -62,6 +62,16 @@ class Invoice implements InvoiceContract
     }
 
     /**
+     * Getting creation date.
+     * 
+     * @return string
+     */
+    public function getCreatedAt(): Carbon
+    {
+        return new Carbon($this->getRawInvoice()->due_date);
+    }
+
+    /**
      * Getting related customer
      * 
      * @return CustomerContract|null

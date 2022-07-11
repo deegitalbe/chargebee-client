@@ -24,6 +24,13 @@ interface InvoiceContract extends HasAttributesContract
     public function getDueDate(): Carbon;
 
     /**
+     * Getting creation date.
+     * 
+     * @return string
+     */
+    public function getCreatedAt(): Carbon;
+
+    /**
      * Getting late statuses.
      * 
      * @return array
