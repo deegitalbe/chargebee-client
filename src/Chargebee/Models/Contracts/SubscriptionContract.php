@@ -57,6 +57,13 @@ interface SubscriptionContract extends HasAttributesContract
     public function getTrialEndingAt(): ?Carbon;
 
     /**
+     * Getting starting date.
+     * 
+     * @return Carbon|null Null if not applicable.
+     */
+    public function getStartedAt(): ?Carbon;
+
+    /**
      * Getting ending date.
      * 
      * @return Carbon|null Null if not applicable.

@@ -101,6 +101,18 @@ class Subscription implements SubscriptionContract
     }
 
     /**
+     * Getting starting date.
+     * 
+     * @return Carbon|null Null if not applicable.
+     */
+    public function getStartedAt(): ?Carbon
+    {
+        $timestamp = optional($this->getRawSubscription())->started_at;
+
+        return $timestamp ? new Carbon($timestamp) : null;
+    }
+
+    /**
      * Getting trial ending date.
      * 
      * @return Carbon|null Null if not applicable.
@@ -119,7 +131,7 @@ class Subscription implements SubscriptionContract
      */
     public function getEndingAt(): ?Carbon
     {
-        $timestamp = optional($this->getRawSubscription())->trial_end;
+        $timestamp = optional($this->getRawSubscription())->current_term_end;
 
         return $timestamp ? new Carbon($timestamp) : null;
     }
