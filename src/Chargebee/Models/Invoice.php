@@ -52,9 +52,9 @@ class Invoice implements InvoiceContract
     }
 
     /**
-     * Getting related customer id.
+     * Getting due date.
      * 
-     * @return string
+     * @return Carbon
      */
     public function getDueDate(): Carbon
     {

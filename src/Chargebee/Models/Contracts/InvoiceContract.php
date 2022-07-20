@@ -17,9 +17,9 @@ interface InvoiceContract extends HasAttributesContract
     public function getCustomerId(): string;
 
     /**
-     * Getting related customer id.
+     * Getting due date.
      * 
-     * @return string
+     * @return Carbon
      */
     public function getDueDate(): Carbon;
 
