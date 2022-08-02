@@ -3,6 +3,7 @@ namespace Deegitalbe\ChargebeeClient\Chargebee\Contracts;
 
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
@@ -68,4 +69,12 @@ interface SubscriptionApiContract
      * @return SubscriptionContract|null
      */
     public function resume(ResumeRequestContract $request): ?SubscriptionContract;
+
+    /**
+     * Pausing subscription.
+     * 
+     * @param UpdateRequestContract $request
+     * @return SubscriptionContract|null
+     */
+    public function update(UpdateRequestContract $request): ?SubscriptionContract;
 }
