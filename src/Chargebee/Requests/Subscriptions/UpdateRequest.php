@@ -15,7 +15,7 @@ class UpdateRequest extends AbstractApiRequest implements UpdateRequestContract
      */
     public function setSubscription(string $subscriptionId): UpdateRequestContract
     {
-        $this->get()->setUrl("subscriptions/$subscriptionId/update");
+        $this->get()->setUrl("subscriptions/$subscriptionId");
 
         return $this;
     }
@@ -40,7 +40,7 @@ class UpdateRequest extends AbstractApiRequest implements UpdateRequestContract
      */
     public function reactivate(bool $isReactivating): UpdateRequestContract
     {
-        $this->get()->addQuery(['reactivate' => $isReactivating]);
+        $this->get()->addQuery(['reactivate' => $isReactivating ? 'true' : 'false']);
 
         return $this;
     }
