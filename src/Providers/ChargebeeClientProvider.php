@@ -41,9 +41,13 @@ use Deegitalbe\ChargebeeClient\Chargebee\Requests\CustomerInvoices\CustomerInvoi
 use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageServiceProvider;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\ManagePaymentMethodRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Utils\ApiStatusContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\Utils\ApiStatusCredential;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\Pages\ManagePaymentMethodRequest;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\UpdateRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Utils\ApiStatus;
 
 /**
@@ -84,6 +88,8 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         $this->app->bind(PayNowRequestContract::class, PayNowRequest::class);
         $this->app->bind(PauseRequestContract::class, PauseRequest::class);
         $this->app->bind(ResumeRequestContract::class, ResumeRequest::class);
+        $this->app->bind(UpdateRequestContract::class, UpdateRequest::class);
+        $this->app->bind(ManagePaymentMethodRequestContract::class, ManagePaymentMethodRequest::class);
 
         // Customer API
         $this->app->bind(CustomerApiContract::class, function($app) {
