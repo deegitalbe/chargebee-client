@@ -2,6 +2,7 @@
 namespace Deegitalbe\ChargebeeClient\Chargebee;
 
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\PageApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\ManagePaymentMethodRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
 use Henrotaym\LaravelApiClient\Contracts\ClientContract;
 
@@ -38,6 +39,25 @@ class PageApi implements PageApiContract
         $response = $this->client->try($request->get(), "Could not generate pay now page.");
 
         if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $response->response()->get()->hosted_page->url;
+    }
+
+    /**
+     * Getting url managing payment methods.
+     * 
+     * @param PayNowRequestContract $request
+     * @return string|null
+     */
+    public function managePaymentMethod(ManagePaymentMethodRequestContract $request): ?string
+    {
+        $response = $this->client->try($request->get(), "Could not generate page managing payment methods.");
+
+        if ($response->failed()):
+            dd($response->error()->context());
             report($response->error());
             return null;
         endif;
