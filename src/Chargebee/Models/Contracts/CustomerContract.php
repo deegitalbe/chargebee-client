@@ -69,6 +69,20 @@ interface CustomerContract extends HasAttributesContract
     public function getEmail(): string;
 
     /**
+     * Getting related vat number.
+     * 
+     * @return string
+     */
+    public function getVatNumber(): string;
+
+    /**
+     * Telling if having vat number.
+     * 
+     * @return bool
+     */
+    public function isHavingVatNumber(): bool;
+
+    /**
      * Telling if this customer has been persisted to chargebee.
      * 
      * @return bool
@@ -81,4 +95,18 @@ interface CustomerContract extends HasAttributesContract
      * @return bool
      */
     public function isChargeable(): bool;
+
+    /**
+     * Telling if having billing address.
+     * 
+     * @return bool
+     */
+    public function isHavingBillingAddress(): bool;
+
+    /**
+     * Getting related biiling address.
+     * 
+     * @return BillingAddressContract|null
+     */
+    public function getBillingAddress(): ?BillingAddressContract;
 }

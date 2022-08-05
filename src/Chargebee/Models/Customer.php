@@ -1,6 +1,7 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\BillingAddressContract;
 use stdClass;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
@@ -28,7 +29,7 @@ class Customer implements CustomerContract
      * Setting customer id.
      * 
      * @param string
-     * @return CustomerContract
+     * @return static
      */
     public function setId(string $id): CustomerContract
     {
@@ -41,7 +42,7 @@ class Customer implements CustomerContract
      * Setting customer first name.
      * 
      * @param string
-     * @return CustomerContract
+     * @return static
      */
     public function setFirstName(string $first_name): CustomerContract
     {
@@ -54,7 +55,7 @@ class Customer implements CustomerContract
      * Setting customer last name.
      * 
      * @param string
-     * @return CustomerContract
+     * @return static
      */
     public function setLastName(string $last_name): CustomerContract
     {
@@ -67,11 +68,24 @@ class Customer implements CustomerContract
      * Setting customer email.
      * 
      * @param string
-     * @return CustomerContract
+     * @return static
      */
     public function setEmail(string $email): CustomerContract
     {
         $this->getRawCustomer()->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Setting customer email.
+     * 
+     * @param string
+     * @return static
+     */
+    public function setVatNumber(string $vatNumber): CustomerContract
+    {
+        $this->getRawCustomer()->vat_number = preg_replace("/[^[0-9]/", '', $vatNumber);
 
         return $this;
     }
@@ -117,6 +131,26 @@ class Customer implements CustomerContract
     }
 
     /**
+     * Getting related vat number.
+     * 
+     * @return string
+     */
+    public function getVatNumber(): string
+    {
+        return $this->getRawCustomer()->vat_number ?? '';
+    }
+
+    /**
+     * Telling if having vat number.
+     * 
+     * @return bool
+     */
+    public function isHavingVatNumber(): bool
+    {
+        return !!$this->getVatNumber();
+    }
+
+    /**
      * Getting underlying raw customer.
      * 
      * @return stdClass
@@ -144,5 +178,28 @@ class Customer implements CustomerContract
     public function isChargeable(): bool
     {
         return ($this->getRawCustomer()->card_status ?? null) === 'valid';
+    }
+    
+
+    /**
+     * Telling if having billing address.
+     * 
+     * @return bool
+     */
+    public function isHavingBillingAddress(): bool
+    {
+        return !!($this->getRawCustomer()->billing_address ?? null);
+    }
+
+    /**
+     * Getting related biiling address.
+     * 
+     * @return BillingAddressContract|null
+     */
+    public function getBillingAddress(): ?BillingAddressContract
+    {
+        return $this->isHavingBillingAddress() ?
+            app()->make(BillingAddressContract::class)->setAttributes($this->getRawCustomer()->billing_address)
+            : null;
     }
 }
