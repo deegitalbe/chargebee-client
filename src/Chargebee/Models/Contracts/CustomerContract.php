@@ -83,6 +83,12 @@ interface CustomerContract extends HasAttributesContract
     public function isHavingVatNumber(): bool;
 
     /**
+     * Telling if customer vat number could not be verified but was manually confirmed.
+     * 
+     * @return bool
+     */
+    public function isUsingUnconventialVatNumber(): bool;
+    /**
      * Telling if this customer has been persisted to chargebee.
      * 
      * @return bool

@@ -151,6 +151,16 @@ class Customer implements CustomerContract
     }
 
     /**
+     * Telling if customer vat number could not be verified but was manually confirmed.
+     * 
+     * @return bool
+     */
+    public function isUsingUnconventialVatNumber(): bool
+    {
+        return $this->getRawCustomer()->business_customer_without_vat_number ?? false;
+    }
+
+    /**
      * Getting underlying raw customer.
      * 
      * @return stdClass

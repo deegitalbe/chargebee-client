@@ -30,6 +30,7 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Utils\ApiStatusContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\PauseRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerInvoiceApiContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateBillingInfoRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\Utils\ApiStatusCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Invoices\InvoiceListRequest;
@@ -44,13 +45,13 @@ use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionPlanApiCredentia
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Pages\ManagePaymentMethodRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
-use Deegitalbe\ChargebeeClient\Chargebee\Requests\CustomerInvoices\CustomerInvoiceRequest;
 use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageServiceProvider;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceListRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\ManagePaymentMethodRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\Customer\UpdateBillingInfoRequest;
 
 /**
  * Chargebee client package service provider.
@@ -93,6 +94,7 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         $this->app->bind(ResumeRequestContract::class, ResumeRequest::class);
         $this->app->bind(UpdateRequestContract::class, UpdateRequest::class);
         $this->app->bind(ManagePaymentMethodRequestContract::class, ManagePaymentMethodRequest::class);
+        $this->app->bind(UpdateBillingInfoRequestContract::class, UpdateBillingInfoRequest::class);
 
         // Customer API
         $this->app->bind(CustomerApiContract::class, function($app) {
