@@ -83,7 +83,7 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
      * @param string $firstName
      * @return static
      */
-    public function setFirstName(bool $firstName): UpdateBillingInfoRequestContract
+    public function setFirstName(string $firstName): UpdateBillingInfoRequestContract
     {
         $this->get()->addQuery(['billing_address[first_name]' => $firstName]);
 
@@ -96,7 +96,7 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
      * @param string $lastName
      * @return static
      */
-    public function setLastName(bool $lastName): UpdateBillingInfoRequestContract
+    public function setLastName(string $lastName): UpdateBillingInfoRequestContract
     {
         $this->get()->addQuery(['billing_address[last_name]' => $lastName]);
 
@@ -109,7 +109,7 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
      * @param string $email
      * @return static
      */
-    public function setEmail(bool $email): UpdateBillingInfoRequestContract
+    public function setEmail(string $email): UpdateBillingInfoRequestContract
     {
         $this->get()->addQuery(['billing_address[email]' => $email]);
         return $this;

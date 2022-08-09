@@ -35,7 +35,7 @@ interface UpdateBillingInfoRequestContract extends ApiRequestContract
      * @param string $firstName
      * @return static
      */
-    public function setFirstName(bool $firstName): UpdateBillingInfoRequestContract;
+    public function setFirstName(string $firstName): UpdateBillingInfoRequestContract;
 
     /**
      * Setting last name.
@@ -43,7 +43,7 @@ interface UpdateBillingInfoRequestContract extends ApiRequestContract
      * @param string $lastName
      * @return static
      */
-    public function setLastName(bool $lastName): UpdateBillingInfoRequestContract;
+    public function setLastName(string $lastName): UpdateBillingInfoRequestContract;
 
     /**
      * Setting email.
@@ -51,7 +51,7 @@ interface UpdateBillingInfoRequestContract extends ApiRequestContract
      * @param string $email
      * @return static
      */
-    public function setEmail(bool $email): UpdateBillingInfoRequestContract;
+    public function setEmail(string $email): UpdateBillingInfoRequestContract;
 
     /**
      * Setting phone.
