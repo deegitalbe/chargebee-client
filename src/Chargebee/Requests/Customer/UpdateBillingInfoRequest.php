@@ -15,7 +15,7 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
 
     protected function build(RequestContract $request): RequestContract
     {
-        return $request;
+        return $request->setVerb('POST');
     }
 
     /**
@@ -147,7 +147,8 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
      */
     public function setStreetNumber(string $streetNumber): UpdateBillingInfoRequestContract
     {
-        $this->get()->addQuery(['billing_address[]' => $streetNumber]);
+        $this->streetNumber = $streetNumber;
+
         return $this;
     }
 
@@ -159,7 +160,8 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
      */
     public function setStreetName(string $streetName): UpdateBillingInfoRequestContract
     {
-        $this->get()->addQuery(['billing_address[]' => $streetName]);
+        $this->streetName = $streetName;
+
         return $this;
     }
 
