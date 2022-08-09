@@ -22,6 +22,14 @@ interface UpdateBillingInfoRequestContract extends ApiRequestContract
     public function setVatNumber(string $vatNumber): UpdateBillingInfoRequestContract;
 
     /**
+     * Setting related vat number country code.
+     * 
+     * @param string $countryCode
+     * @return static
+     */
+    public function setVatNumberCountryCode(string $countryCode): UpdateBillingInfoRequestContract;
+
+    /**
      * Setting first name.
      * 
      * @param string $firstName

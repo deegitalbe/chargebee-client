@@ -65,6 +65,19 @@ class UpdateBillingInfoRequest extends AbstractApiRequest implements UpdateBilli
     }
 
     /**
+     * Setting related vat number country code.
+     * 
+     * @param string $countryCode
+     * @return static
+     */
+    public function setVatNumberCountryCode(string $countryCode): UpdateBillingInfoRequestContract
+    {
+        $this->get()->addQuery(['vat_number_prefix' => $countryCode]);
+        
+        return $this;
+    }
+
+    /**
      * Setting first name.
      * 
      * @param string $firstName
