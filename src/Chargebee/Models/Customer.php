@@ -107,7 +107,7 @@ class Customer implements CustomerContract
      */
     public function getFirstName(): string
     {
-        return $this->getRawCustomer()->first_name;
+        return $this->getRawCustomer()->first_name ?? '';
     }
     
     /**
@@ -117,7 +117,7 @@ class Customer implements CustomerContract
      */
     public function getLastName(): string
     {
-        return $this->getRawCustomer()->last_name;
+        return $this->getRawCustomer()->last_name ?? '';
     }
     
     /**
@@ -127,7 +127,7 @@ class Customer implements CustomerContract
      */
     public function getEmail(): string
     {
-        return $this->getRawCustomer()->email;
+        return $this->getRawCustomer()->email ?? '';
     }
 
     /**
