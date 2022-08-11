@@ -187,7 +187,7 @@ class Customer implements CustomerContract
      */
     public function isChargeable(): bool
     {
-        return ($this->getRawCustomer()->card_status ?? null) === 'valid';
+        return optional($this->getRawCustomer()->payment_method)->status === 'valid';
     }
     
 
