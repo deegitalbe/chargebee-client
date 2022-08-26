@@ -51,6 +51,8 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceList
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\ManagePaymentMethodRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethod;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Customer\UpdateBillingInfoRequest;
 
 /**
@@ -86,6 +88,7 @@ class ChargebeeClientProvider extends VersionablePackageServiceProvider
         $this->app->bind(SubscriptionPlanContract::class, SubscriptionPlan::class);
         $this->app->bind(InvoiceContract::class, Invoice::class);
         $this->app->bind(BillingAddressContract::class, BillingAddress::class);
+        $this->app->bind(PaymentMethodContract::class, PaymentMethod::class);
 
         // Requests
         $this->app->bind(InvoiceListRequestContract::class, InvoiceListRequest::class);

@@ -115,4 +115,18 @@ interface CustomerContract extends HasAttributesContract
      * @return BillingAddressContract|null
      */
     public function getBillingAddress(): ?BillingAddressContract;
+
+    /**
+     * Telling if having payment method.
+     * 
+     * @return bool
+     */
+    public function isHavingPaymentMethod(): bool;
+
+    /**
+     * Getting related payment method.
+     * 
+     * @return PaymentMethodContract|null
+     */
+    public function getPaymentMethod(): ?PaymentMethodContract;
 }

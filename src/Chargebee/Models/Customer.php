@@ -5,6 +5,7 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\BillingAddressContract
 use stdClass;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
 
 /**
  * Representing a chargebee customer
@@ -210,6 +211,28 @@ class Customer implements CustomerContract
     {
         return $this->isHavingBillingAddress() ?
             app()->make(BillingAddressContract::class)->setAttributes($this->getRawCustomer()->billing_address)
+            : null;
+    }
+
+    /**
+     * Telling if having payment method.
+     * 
+     * @return bool
+     */
+    public function isHavingPaymentMethod(): bool
+    {
+        return !!($this->getRawCustomer()->payment_method ?? null);
+    }
+
+    /**
+     * Getting related payment method.
+     * 
+     * @return PaymentMethodContract|null
+     */
+    public function getPaymentMethod(): ?PaymentMethodContract
+    {
+        return $this->isHavingPaymentMethod() ?
+            app()->make(PaymentMethodContract::class)->setAttributes($this->getRawCustomer()->payment_method)
             : null;
     }
 }
