@@ -1,6 +1,7 @@
 <?php
-namespace Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts;
+namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 
 /**

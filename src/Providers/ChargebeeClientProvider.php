@@ -14,6 +14,7 @@ use Deegitalbe\ChargebeeClient\Chargebee\CustomerInvoiceApi;
 use Deegitalbe\ChargebeeClient\Package as UnderlyingPackage;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Subscription;
 use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionPlanApi;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\PaymentMethod;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\BillingAddress;
 use Deegitalbe\ChargebeeClient\Chargebee\SubscriptionInvoiceApi;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\SubscriptionPlan;
@@ -30,7 +31,6 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Utils\ApiStatusContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\PauseRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerInvoiceApiContract;
-use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateBillingInfoRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\Utils\ApiStatusCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Invoices\InvoiceListRequest;
@@ -38,12 +38,14 @@ use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\ResumeRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Subscriptions\UpdateRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionPlanApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\BillingAddressContract;
 use Deegitalbe\TrustupVersionedPackage\Contracts\VersionedPackageCheckerContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionInvoiceApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Credential\SubscriptionPlanApiCredential;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\SubscriptionPlanContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Requests\Pages\ManagePaymentMethodRequest;
+use Deegitalbe\ChargebeeClient\Chargebee\Requests\Customer\UpdateBillingInfoRequest;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
 use Henrotaym\LaravelPackageVersioning\Providers\Abstracts\VersionablePackageServiceProvider;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
@@ -51,9 +53,7 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Invoices\InvoiceList
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\ManagePaymentMethodRequestContract;
-use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethod;
-use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
-use Deegitalbe\ChargebeeClient\Chargebee\Requests\Customer\UpdateBillingInfoRequest;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateBillingInfoRequestContract;
 
 /**
  * Chargebee client package service provider.
