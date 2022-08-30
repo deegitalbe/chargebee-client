@@ -79,6 +79,19 @@ class Customer implements CustomerContract
     }
 
     /**
+     * Setting customer locale.
+     * 
+     * @param string $locale
+     * @return CustomerContract
+     */
+    public function setLocale(string $locale): CustomerContract
+    {
+        $this->getRawCustomer()->locale = $locale;
+
+        return $this;
+    }
+
+    /**
      * Setting customer email.
      * 
      * @param string
@@ -234,5 +247,15 @@ class Customer implements CustomerContract
         return $this->isHavingPaymentMethod() ?
             app()->make(PaymentMethodContract::class)->setAttributes($this->getRawCustomer()->payment_method)
             : null;
+    }
+
+    /**
+     * Getting customer locale.
+     * 
+     * @return string|null
+     */
+    public function getLocale(): ?string
+    {
+        return $this->getRawCustomer()->locale ?? null;
     }
 }

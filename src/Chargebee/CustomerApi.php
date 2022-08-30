@@ -67,6 +67,7 @@ class CustomerApi implements CustomerApiContract
                 'first_name' => $customer->getFirstName(),
                 'last_name' => $customer->getLastName(),
                 'email' => $customer->getEmail(),
+                'locale' => $customer->getLocale()
             ]);
 
         $response = $this->client->try($request, "Could not create customer.");

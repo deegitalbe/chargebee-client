@@ -11,7 +11,7 @@ interface CustomerContract extends HasAttributesContract
     /**
      * Setting customer id.
      * 
-     * @param string
+     * @param string $id
      * @return CustomerContract
      */
     public function setId(string $id): CustomerContract;
@@ -19,7 +19,7 @@ interface CustomerContract extends HasAttributesContract
     /**
      * Setting customer first name.
      * 
-     * @param string
+     * @param string $first_name
      * @return CustomerContract
      */
     public function setFirstName(string $first_name): CustomerContract;
@@ -27,7 +27,7 @@ interface CustomerContract extends HasAttributesContract
     /**
      * Setting customer last name.
      * 
-     * @param string
+     * @param string $last_name
      * @return CustomerContract
      */
     public function setLastName(string $last_name): CustomerContract;
@@ -35,10 +35,19 @@ interface CustomerContract extends HasAttributesContract
     /**
      * Setting customer email.
      * 
-     * @param string
+     * @param string $email
      * @return CustomerContract
      */
     public function setEmail(string $email): CustomerContract;
+
+    /**
+     * Setting customer locale.
+     * 
+     * @param string $locale
+     * @return CustomerContract
+     */
+    public function setLocale(string $locale): CustomerContract;
+    
     
     /**
      * Getting customer id.
@@ -129,4 +138,11 @@ interface CustomerContract extends HasAttributesContract
      * @return PaymentMethodContract|null
      */
     public function getPaymentMethod(): ?PaymentMethodContract;
+
+    /**
+     * Getting customer locale.
+     * 
+     * @return string|null
+     */
+    public function getLocale(): ?string;
 }
