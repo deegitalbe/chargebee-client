@@ -2,6 +2,7 @@
 namespace Deegitalbe\ChargebeeClient\Chargebee\Contracts;
 
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateBillingInfoRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 
 /**
@@ -41,4 +42,12 @@ interface CustomerApiContract
      * @return CustomerContract|null
      */
     public function updateBillingInfo(UpdateBillingInfoRequestContract $request): ?CustomerContract;
+
+    /**
+     * Updating customer.
+     * 
+     * @param UpdateRequestContract $request
+     * @return CustomerContract|null
+     */
+    public function update(UpdateRequestContract $request): ?CustomerContract;
 }

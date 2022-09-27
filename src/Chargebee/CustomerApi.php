@@ -6,6 +6,7 @@ use Henrotaym\LaravelApiClient\Contracts\ClientContract;
 use Henrotaym\LaravelApiClient\Contracts\RequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\CustomerApiContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateBillingInfoRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Customer\UpdateRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
 
 /**
@@ -122,6 +123,24 @@ class CustomerApi implements CustomerApiContract
         ]);
 
         $response = $this->client->try($request->get(), "Could not update customer billing details.");
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $this->toCustomer($response->response()->get());
+    }
+
+    /**
+     * Updating customer.
+     * 
+     * @param UpdateRequestContract $request
+     * @return CustomerContract|null
+     */
+    public function update(UpdateRequestContract $request): ?CustomerContract
+    {
+        $response = $this->client->try($request->get(), "Could not update customer.");
 
         if ($response->failed()):
             report($response->error());
