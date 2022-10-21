@@ -41,6 +41,16 @@ class Invoice implements InvoiceContract
     }
 
     /**
+     * Getting id.
+     * 
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->getRawInvoice()->id;
+    }
+
+    /**
      * Getting related customer id.
      * 
      * @param string

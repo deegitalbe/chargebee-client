@@ -14,6 +14,13 @@ interface InvoiceContract extends HasAttributesContract
      * 
      * @return string
      */
+    public function getId(): string;
+
+    /**
+     * Getting related customer id.
+     * 
+     * @return string
+     */
     public function getCustomerId(): string;
 
     /**
