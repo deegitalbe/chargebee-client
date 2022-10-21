@@ -52,6 +52,16 @@ class Invoice implements InvoiceContract
     }
 
     /**
+     * Getting related subscription id.
+     * 
+     * @return ?string
+     */
+    public function getSubscriptionId(): ?string
+    {
+        return $this->getRawInvoice()->subscription_id;
+    }
+
+    /**
      * Getting due date.
      * 
      * @return Carbon
