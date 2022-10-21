@@ -38,6 +38,20 @@ interface InvoiceContract extends HasAttributesContract
     public function getCreatedAt(): Carbon;
 
     /**
+     * Getting status
+     * 
+     * @return string
+     */
+    public function getStatus(): string;
+
+    /**
+     * Getting invoice ammount.
+     * 
+     * @return int
+     */
+    public function getAmount(): int;
+
+    /**
      * Getting late statuses.
      * 
      * @return array

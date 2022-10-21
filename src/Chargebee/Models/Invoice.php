@@ -95,6 +95,26 @@ class Invoice implements InvoiceContract
     }
 
     /**
+     * Getting status
+     * 
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->getRawInvoice()->status;
+    }
+
+    /**
+     * Getting invoice ammount.
+     * 
+     * @return int
+     */
+    public function getAmount(): int
+    {
+        return $this->getRawInvoice()->amount;
+    }
+
+    /**
      * Getting underlying raw invoice.
      * 
      * @return stdClass
