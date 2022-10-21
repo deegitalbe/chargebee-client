@@ -68,7 +68,7 @@ class Invoice implements InvoiceContract
      */
     public function getSubscriptionId(): ?string
     {
-        return $this->getRawInvoice()->subscription_id;
+        return $this->getRawInvoice()->subscription_id ?? null;
     }
 
     /**
@@ -119,9 +119,9 @@ class Invoice implements InvoiceContract
      * 
      * @return int
      */
-    public function getAmount(): int
+    public function getTotal(): int
     {
-        return $this->getRawInvoice()->amount;
+        return $this->getRawInvoice()->total;
     }
 
     /**

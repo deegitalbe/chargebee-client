@@ -56,7 +56,7 @@ interface InvoiceContract extends HasAttributesContract
      * 
      * @return int
      */
-    public function getAmount(): int;
+    public function getTotal(): int;
 
     /**
      * Getting late statuses.
