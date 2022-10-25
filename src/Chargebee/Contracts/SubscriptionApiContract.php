@@ -42,9 +42,10 @@ interface SubscriptionApiContract
      * Cancelling subscription now.
      * 
      * @param SubscriptionContract $subscription
+     * @param bool $issueProratedCredit This option when set to true, allows prorated credit to be issued for remaining period of subscription.
      * @return SubscriptionContract|null Null if error.
      */
-    public function cancelNow(SubscriptionContract $subscription): ?SubscriptionContract;
+    public function cancelNow(SubscriptionContract $subscription, bool $issueProratedCredit = false): ?SubscriptionContract;
 
     /**
      * Reactivate subscription.
