@@ -273,7 +273,7 @@ class SubscriptionApi implements SubscriptionApiContract
 
         $request->setVerb('POST')
             ->setUrl("subscriptions/{$subscription->getId()}/change_term_end")
-            ->addData(['term_ends_at' => now()->addMinute()->timestamp]);
+            ->addQuery(['term_ends_at' => now()->addMinute()->timestamp]);
 
         $response = $this->client->try($request, "Could not end trial now.");
 
