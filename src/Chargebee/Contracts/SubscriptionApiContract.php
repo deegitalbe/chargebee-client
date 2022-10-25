@@ -78,4 +78,12 @@ interface SubscriptionApiContract
      * @return SubscriptionContract|null
      */
     public function update(UpdateRequestContract $request): ?SubscriptionContract;
+
+    /**
+     * Ending subscription trial as soon as possible.
+     * 
+     * @param SubscriptionContract $subscription
+     * @return ?SubscriptionContract
+     */
+    public function endTrialNow(SubscriptionContract $subscription): ?SubscriptionContract;
 }

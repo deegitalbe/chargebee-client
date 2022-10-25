@@ -261,6 +261,31 @@ class SubscriptionApi implements SubscriptionApiContract
     }
 
     /**
+     * Ending subscription trial as soon as possible.
+     * 
+     * @param SubscriptionContract $subscription
+     * @return ?SubscriptionContract
+     */
+    public function endTrialNow(SubscriptionContract $subscription): ?SubscriptionContract
+    {
+        /** @var RequestContract */
+        $request = app()->make(RequestContract::class);
+
+        $request->setVerb('POST')
+            ->setUrl("subscriptions/{$subscription->getId()}/change_term_end")
+            ->addData(['term_ends_at' => now()->addMinute()->timestamp]);
+
+        $response = $this->client->try($request, "Could not end trial now.");
+
+        if ($response->failed()):
+            report($response->error());
+            return null;
+        endif;
+
+        return $this->toSubscription($response->response()->get());
+    }
+
+    /**
      * Transforming raw subscription sent back by api.
      * 
      * @param stdClass $raw_response
