@@ -217,7 +217,7 @@ class SubscriptionApi implements SubscriptionApiContract
         $response = $this->client->try($request->get(), "Could not pause subscription.");
 
         if ($response->failed()):
-            dd($response->error()->context());
+            report($response->error());
             return null;
         endif;
 
@@ -235,7 +235,7 @@ class SubscriptionApi implements SubscriptionApiContract
         $response = $this->client->try($request->get(), "Could not resume subscription.");
 
         if ($response->failed()):
-            dd($response->error()->context());
+            report($response->error());
             return null;
         endif;
 
@@ -253,7 +253,7 @@ class SubscriptionApi implements SubscriptionApiContract
         $response = $this->client->try($request->get(), "Could not update subscription.");
 
         if ($response->failed()):
-            dd($response->error()->context());
+            report($response->error());
             return null;
         endif;
 

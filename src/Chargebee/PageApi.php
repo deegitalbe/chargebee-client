@@ -57,7 +57,6 @@ class PageApi implements PageApiContract
         $response = $this->client->try($request->get(), "Could not generate page managing payment methods.");
 
         if ($response->failed()):
-            dd($response->error()->context());
             report($response->error());
             return null;
         endif;
