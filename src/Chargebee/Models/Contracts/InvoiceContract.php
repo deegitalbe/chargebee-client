@@ -59,6 +59,34 @@ interface InvoiceContract extends HasAttributesContract
     public function getTotal(): int;
 
     /**
+     * Telling if fully paid.
+     * 
+     * @return bool
+     */
+    public function isFullyPaid(): bool;
+
+    /**
+     * Telling if still requiring payment.
+     * 
+     * @return bool
+     */
+    public function stillRequiresPayment(): bool;
+
+    /**
+     * Getting amount due.
+     * 
+     * @return int
+     */
+    public function getAmountDue(): int;
+
+    /**
+     * Getting amount paid.
+     * 
+     * @return int
+     */
+    public function getAmountPaid(): int;
+
+    /**
      * Getting late statuses.
      * 
      * @return array

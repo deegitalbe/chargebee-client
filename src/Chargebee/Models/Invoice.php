@@ -133,4 +133,24 @@ class Invoice implements InvoiceContract
     {
         return $this->attributes->invoice;
     }
+
+    public function isFullyPaid(): bool
+    {
+        return $this->getAmountDue() === 0;
+    }
+
+    public function stillRequiresPayment(): bool
+    {
+        return !$this->isFullyPaid();
+    }
+
+    public function getAmountDue(): int
+    {
+        return $this->getRawInvoice()->amount_due;
+    }
+
+    public function getAmountPaid(): int
+    {
+        return $this->getRawInvoice()->amount_paid;
+    }
 }
