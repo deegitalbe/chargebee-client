@@ -13,6 +13,8 @@ use Deegitalbe\ChargebeeClient\Chargebee\Contracts\SubscriptionInvoiceApiContrac
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Pages\PayNowRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\PauseRequestContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Contracts\Requests\Subscriptions\ResumeRequestContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\CustomerContract;
+use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
 
 class ExampleTest extends TestCase
 {
@@ -21,8 +23,16 @@ class ExampleTest extends TestCase
     /**
      * @test
      */
-    public function returning_true()
+    public function parsing_pending_verification()
     {
+        $attributes = json_decode(json_encode([
+            "status" => "pending_verification"
+        ]));
+
+        $paymentMethod = app()->make(PaymentMethodContract::class);
+        $paymentMethod->setAttributes($attributes);
+        
+        $this->assertTrue($paymentMethod->isPendingVerification());
         // /** @var SubscriptionInvoiceApiContract */
         // $service = $this->app->make(SubscriptionInvoiceApiContract::class);
         // $subscription = $this->app->make(SubscriptionApiContract::class)->find("AzqgtCRyIzCRUFS");
@@ -61,10 +71,116 @@ class ExampleTest extends TestCase
         // $api = $this->app->make(SubscriptionApiContract::class);
         // dd($api->resume($request));*
         /** @var ApiStatus */
-        $service = $this->app->make(ApiStatusContract::class);
+        // $service = $this->app->make(ApiStatusContract::class);
 
-        for ($i=0; $i < 1000; $i++) {
-            $this->assertTrue($service->fresh()->isHealthy());
-        }
+        // for ($i=0; $i < 1000; $i++) {
+        //     $this->assertTrue($service->fresh()->isHealthy());
+        // }
+    }
+
+    /**
+     * @test
+     */
+    public function parsing_expired()
+    {
+        $attributes = json_decode(json_encode([
+            "status" => "expiring"
+        ]));
+
+        $paymentMethod = app()->make(PaymentMethodContract::class);
+        $paymentMethod->setAttributes($attributes);
+        
+        $this->assertTrue($paymentMethod->isExpiring());
+    }
+
+    /**
+     * @test
+     */
+    public function parsing_valid()
+    {
+        $attributes = json_decode(json_encode([
+            "status" => "valid"
+        ]));
+
+        $paymentMethod = app()->make(PaymentMethodContract::class);
+        $paymentMethod->setAttributes($attributes);
+        
+        $this->assertTrue($paymentMethod->isValid());
+    }
+
+    /**
+     * @test
+     */
+    public function customer_telling_true_if_payment_method_valid()
+    {
+        $attributes = json_decode(json_encode([
+            "customer" => [
+                "payment_method" => [
+                    "status" => "valid"
+                ]
+            ]
+        ]));
+
+        $customer = app()->make(CustomerContract::class);
+        $customer->setAttributes($attributes);
+        
+        $this->assertTrue($customer->isChargeable());
+    }
+
+    /**
+     * @test
+     */
+    public function customer_telling_true_if_payment_method_expiring()
+    {
+        $attributes = json_decode(json_encode([
+            "customer" => [
+                "payment_method" => [
+                    "status" => "expiring"
+                ]
+            ]
+        ]));
+
+        $customer = app()->make(CustomerContract::class);
+        $customer->setAttributes($attributes);
+        
+        $this->assertTrue($customer->isChargeable());
+    }
+
+    /**
+     * @test
+     */
+    public function customer_telling_true_if_payment_method_pending_verification()
+    {
+        $attributes = json_decode(json_encode([
+            "customer" => [
+                "payment_method" => [
+                    "status" => "pending_verification"
+                ]
+            ]
+        ]));
+
+        $customer = app()->make(CustomerContract::class);
+        $customer->setAttributes($attributes);
+        
+        $this->assertTrue($customer->isChargeable());
+    }
+
+    /**
+     * @test
+     */
+    public function customer_telling_true_if_payment_method_expired()
+    {
+        $attributes = json_decode(json_encode([
+            "customer" => [
+                "payment_method" => [
+                    "status" => "expired"
+                ]
+            ]
+        ]));
+
+        $customer = app()->make(CustomerContract::class);
+        $customer->setAttributes($attributes);
+        
+        $this->assertFalse($customer->isChargeable());
     }
 }

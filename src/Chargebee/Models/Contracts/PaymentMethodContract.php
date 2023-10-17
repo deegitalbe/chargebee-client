@@ -1,6 +1,7 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Enums\PaymentMethodStatus;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\HasAttributesContract;
 
 /**
@@ -28,4 +29,25 @@ interface PaymentMethodContract extends HasAttributesContract
      * @return bool
      */
     public function isValid(): bool;
+
+    /**
+     * Telling if payment method is about to expire.
+     * 
+     * @return bool
+     */
+    public function isExpiring(): bool;
+
+    /**
+     * Telling if payment method is pending verification.
+     * 
+     * @return bool
+     */
+    public function isPendingVerification(): bool;
+
+    /**
+     * Getting status.
+     * 
+     * @return PaymentMethodStatus
+     */
+    public function getStatus(): PaymentMethodStatus;
 }

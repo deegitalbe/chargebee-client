@@ -1,6 +1,7 @@
 <?php
 namespace Deegitalbe\ChargebeeClient\Chargebee\Models;
 
+use Deegitalbe\ChargebeeClient\Chargebee\Enums\PaymentMethodStatus;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Contracts\PaymentMethodContract;
 use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
 
@@ -9,7 +10,17 @@ use Deegitalbe\ChargebeeClient\Chargebee\Models\Traits\HasAttributes;
  */
 class PaymentMethod implements PaymentMethodContract
 {
-    use HasAttributes;
+    protected PaymentMethodStatus $status;
+
+    use HasAttributes { setAttributes as setDefaultAttributes; }
+
+    public function setAttributes($attributes)
+    {
+        $this->setDefaultAttributes($attributes);
+        $this->status = PaymentMethodStatus::from($this->attributes->status);
+
+        return $this;
+    }
 
     /**
      * Telling if payment method is sepa.
@@ -38,6 +49,37 @@ class PaymentMethod implements PaymentMethodContract
      */
     public function isValid(): bool
     {
-        return $this->attributes->status === 'valid';
+        return $this->getStatus() === PaymentMethodStatus::VALID;
+    }
+
+    /**
+     * Telling if payment method is about to expire.
+     * 
+     * @return bool
+     */
+    public function isExpiring(): bool
+    {
+        return $this->getStatus() === PaymentMethodStatus::EXPIRING;
+
+    }
+
+    /**
+     * Telling if payment method is pending verification.
+     * 
+     * @return bool
+     */
+    public function isPendingVerification(): bool
+    {
+        return $this->getStatus() === PaymentMethodStatus::PENDING_VERIFICATION;
+    }
+
+    /**
+     * Getting status.
+     * 
+     * @return PaymentMethodStatus
+     */
+    public function getStatus(): PaymentMethodStatus
+    {
+        return $this->status;
     }
 }
