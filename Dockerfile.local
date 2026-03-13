@@ -1,0 +1,28 @@
+FROM alpine AS dns
+RUN echo 'nameserver 8.8.8.8' > /resolv.conf \
+    && echo 'nameserver 1.1.1.1' >> /resolv.conf
+
+FROM php:8.1.7-cli-alpine AS app
+
+ARG UID=1000
+ARG GID=1000
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/local/bin/composer
+
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.10.0/install-php-extensions /usr/local/bin/
+
+RUN --mount=type=bind,from=dns,source=/resolv.conf,target=/etc/resolv.conf \
+    install-php-extensions zip bcmath pcov \
+    && apk add --no-cache shadow curl
+
+RUN usermod  --uid ${UID} --non-unique www-data && \
+    groupmod --gid ${GID} --non-unique www-data
+
+WORKDIR /opt/apps/app
+
+ENV XDG_CONFIG_HOME=/tmp
+ENV XDG_DATA_HOME=/tmp
+
+USER www-data
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]

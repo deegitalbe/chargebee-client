@@ -1,0 +1,98 @@
+#!/bin/bash
+
+run() {
+    docker compose exec -it \
+        chargebee-client-app \
+        "$@"
+}
+
+if [ "$1" == "root" ]
+    then
+        script="$2"
+        folder=$(echo $PWD | sed -e 's/.\+\/projects\///g')
+        parameters=$folder
+        if [ $3 ]
+            then
+                parameters=${@:3}
+        fi
+
+        cd ../../
+        ./cli $script $parameters
+        cd $PWD
+    exit
+fi
+
+if [ "$1" == "bootstrap" ]
+    then
+        ./scripts/bootstrap.sh
+    exit
+fi
+
+if [ "$1" == "start" ]
+    then
+        ./scripts/start.sh
+    exit
+fi
+
+if [ "$1" == "stop" ]
+    then
+        ./scripts/stop.sh
+    exit
+fi
+
+if [ "$1" == "restart" ]
+    then
+        ./scripts/restart.sh
+    exit
+fi
+
+if [ "$1" == "set_env" ]
+    then
+        ./scripts/set_env.sh
+    exit
+fi
+
+if [ "$1" == "composer" ]
+    then
+        run composer ${@:2}
+    exit
+fi
+
+if [ "$1" == "php" ]
+    then
+        run php ${@:2}
+    exit
+fi
+
+if [ "$1" == "artisan" ]
+    then
+        run php artisan ${@:2}
+    exit
+fi
+
+if [ "$1" == "test" ]
+    then
+        # Ensure services are running
+        running=$(docker compose ps --status running --format "{{.Name}}" 2>/dev/null | grep -c "chargebee-client")
+        if [ "$running" -lt 1 ]; then
+            echo "Services not running. Starting them..."
+            docker compose up -d
+        fi
+
+        run vendor/bin/phpunit ${@:2}
+    exit
+fi
+
+if [ "$1" == "lint" ]
+    then
+        run ./vendor/bin/pint --test
+    exit
+fi
+
+if [ "$1" == "analyse" ]
+    then
+        run ./vendor/bin/phpstan analyse --memory-limit=512M
+    exit
+fi
+
+run "$@"

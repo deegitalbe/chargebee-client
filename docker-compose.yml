@@ -1,0 +1,20 @@
+services:
+    chargebee-client-app:
+        container_name: chargebee-client-app
+        user: "${UID}:${GID}"
+        build:
+            args:
+                - UID=${UID}
+                - GID=${GID}
+            context: .
+            dockerfile: ./Dockerfile.local
+            target: app
+        restart: unless-stopped
+        volumes:
+            - .:/opt/apps/app
+        networks:
+            - app
+
+networks:
+    app:
+        driver: bridge
